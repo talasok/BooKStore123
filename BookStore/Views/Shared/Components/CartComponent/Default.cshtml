@@ -1,0 +1,56 @@
+﻿@model System.Collections.Generic.Dictionary<Book, int>
+@{  
+    float sl = 0, gia = 0;
+    if(Model!=null)
+        foreach (KeyValuePair<Book, int> item in Model)
+        {
+            sl += item.Value;
+            gia += item.Key.Price * item.Value;
+        }
+}
+    <div class="cart-block">
+        <div class="cart-total">
+            <span class="text-number">
+                @sl
+            </span>
+            <span class="text-item">
+                Shopping Cart
+            </span>
+            <span class="price">
+                £@gia
+                <i class="fas fa-chevron-down"></i>
+            </span>
+        </div>
+        <div class="cart-dropdown-block">
+            <div class=" single-cart-block ">
+                @if (Model != null)
+                @foreach (KeyValuePair<Book, int> item in Model)
+                {
+                    <div class="cart-product">
+                        <a href="product-details.html" class="image">
+                            <img src="~/image/products/cart-product-1.jpg" alt="">
+                        </a>
+                        <div class="content">
+                            <h3 class="title">
+                                <a href="product-details.html">
+                                    @item.Key.Title
+                                </a>
+                            </h3>
+                            <p class="price"><span class="qty">@item.Value ×</span> £@item.Key.Price</p>
+                            <a href="@Url.Action("RemoveProduct", new {item.Key.Id})" class="cross-btn"><i class="fas fa-times"></i></a>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class=" single-cart-block ">
+                <div class="btn-block">
+                    <a href="@Url.Action("Index","Cart")" class="btn">
+                        View Cart <i class="fas fa-chevron-right"></i>
+                    </a>
+                    <a href="checkout.html" class="btn btn--primary">
+                        Check Out <i class="fas fa-chevron-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
